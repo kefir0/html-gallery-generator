@@ -12,10 +12,14 @@
         <Style TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
+        <Style TargetType="DockPanel">
+            <Setter Property="Margin" Value="0,5,0,0" />
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <GroupBox Header="Список файлов (каждый на новой строке)" Margin="10">
@@ -32,14 +36,28 @@
                 <Button Content="Загрузить из папки" Grid.Row="1" Margin="5" Command="{Binding LoadFilesFromFolderCommand}" />
             </Grid>
         </GroupBox>
-        <GroupBox Margin="10" Header="Опции" Grid.Row="1">
+        <GroupBox Margin="10,0,10,10" Header="Опции" Grid.Row="1">
             <StackPanel Orientation="Vertical">
-                <DockPanel >
+                <DockPanel>
                     <TextBlock Text="Относительный путь к картинкам на сервере: " DockPanel.Dock="Left" Margin="5" />
                     <TextBox Text="{Binding ServerImagePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Заголовок: " DockPanel.Dock="Left" Margin="5" />
+                    <TextBox Text="{Binding GalleryTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Фоток на странице: " DockPanel.Dock="Left" Margin="5" />
+                    <TextBox Text="{Binding PageSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Имя результирующих файлов: " DockPanel.Dock="Left" Margin="5" />
+                    <TextBox Text="{Binding OutputFileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
+                </DockPanel>
             </StackPanel>
         </GroupBox>
+        
+        <Button HorizontalAlignment="Right" Content="Атакен!!1" Grid.Row="2" Width="200" Margin="0,0,10,10" Command="{Binding GoCommand}" />
         
     </Grid>
 </Window>
