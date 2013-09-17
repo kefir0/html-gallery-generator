@@ -19,6 +19,7 @@ namespace HtmlGalleryGenerator
                 if (value == _fileListText) return;
                 _fileListText = value;
                 OnPropertyChanged("FileListText");
+                GoCommand.OnCanExecuteChanged();
             }
         }
 
@@ -39,6 +40,50 @@ namespace HtmlGalleryGenerator
                 if (value == _serverImagePath) return;
                 _serverImagePath = value;
                 OnPropertyChanged("ServerImagePath");
+            }
+        }
+
+        public string GalleryTitle
+        {
+            get { return _galleryTitle; }
+            set
+            {
+                if (value == _galleryTitle) return;
+                _galleryTitle = value;
+                OnPropertyChanged("GalleryTitle");
+            }
+        }
+
+        public int PageSize
+        {
+            get { return _pageSize; }
+            set
+            {
+                if (value == _pageSize) return;
+                if (value <= 0) throw new ArgumentException();
+                _pageSize = value;
+                OnPropertyChanged("PageSize");
+            }
+        }
+
+        public DelegateCommand GoCommand
+        {
+            get { return _goCommand ?? (_goCommand = new DelegateCommand(Go, CanGo)); }
+        }
+
+        private bool CanGo()
+        {
+            return !string.IsNullOrEmpty(FileListText);
+        }
+
+        public string OutputFileName
+        {
+            get { return _outputFileName; }
+            set
+            {
+                if (value == _outputFileName) return;
+                _outputFileName = value;
+                OnPropertyChanged("OutputFileName");
             }
         }
 
@@ -63,12 +108,40 @@ namespace HtmlGalleryGenerator
 
         #region private methods
 
-        private void LoadFilesFromFolder()
+        private void Go()
         {
-            var dlg = new FolderBrowserDialog();
+            var dlg = new FolderBrowserDialog{Description = "Выбери целевую папку (куда HTML файлы галереи записать)"};
             if (dlg.ShowDialog() == DialogResult.OK && Directory.Exists(dlg.SelectedPath))
             {
-                FileListText = string.Join(Environment.NewLine, Directory.GetFiles(dlg.SelectedPath).Select(Path.GetFileName).ToArray());
+                try
+                {
+                    GalleryProcessor.CreateGallery(
+                        FileListText.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries), GalleryTitle,
+                        ServerImagePath, OutputFileName, PageSize, dlg.SelectedPath);
+
+                    // Copy CSS and logo
+                    CopyFileToDir("trialru.css", dlg.SelectedPath);
+                    CopyFileToDir("logo.png", dlg.SelectedPath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Это провал!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void CopyFileToDir(string file, string dir)
+        {
+            File.Copy(file, Path.Combine(dir, file));
+        }
+
+        private void LoadFilesFromFolder()
+        {
+            var dlg = new FolderBrowserDialog{Description = "Папка с картинками:"};
+            if (dlg.ShowDialog() == DialogResult.OK && Directory.Exists(dlg.SelectedPath))
+            {
+                FileListText = string.Join(Environment.NewLine,
+                    Directory.GetFiles(dlg.SelectedPath).Select(Path.GetFileName).ToArray());
             }
         }
 
@@ -77,8 +150,12 @@ namespace HtmlGalleryGenerator
         #region private fields
 
         private DelegateCommand _loadFilesFromFolderCommand;
-        private string _fileListText;
+        private string _fileListText = string.Empty;
         private string _serverImagePath = "images/";
+        private string _galleryTitle = "Vyborg Outdoor Camp 2013";
+        private int _pageSize = 20;
+        private DelegateCommand _goCommand;
+        private string _outputFileName = "gallery";
 
         #endregion
     }

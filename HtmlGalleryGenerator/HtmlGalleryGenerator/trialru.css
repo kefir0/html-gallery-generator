@@ -1,0 +1,98 @@
+.mainContent {
+    width: 1020px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    /*padding: 10px 40px 50px 40px;*/
+}
+
+.logo {
+    display: table;
+    margin: auto;
+    border-bottom: 1px dotted #7F7F7F;
+    width: 1002px;
+}
+
+
+.pageNum {
+       margin-right: 4px;
+}
+
+.pages {
+    color: #535353;
+    font-weight: bold;
+}
+
+p {
+    text-align: right;
+}
+
+.photoAndText {
+    margin-top: 15px;
+    width: 1%;
+    background: #535353;
+    border: 3px solid #535353;
+    color: white;
+    display: table;
+    text-align: right;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text {
+    margin-right: 3px;
+    margin-top:2px;
+    font-family: helvetica, arial, sans-serif;
+    display:block;
+}
+
+
+.photo1 {
+    background: #535353;
+    border: 3px solid #535353;
+}
+
+.photoAndText1 {
+    margin-top: 15px;
+    width: 1%;
+    color: #535353;
+    display: table;
+    text-align: right;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.photo2 {
+    background: #535353;
+    /*border: 3px solid #535353;*/
+    box-shadow: 3px 3px 5px gray;
+    margin-bottom: 10px;
+}
+
+.photoAndText2 {
+    margin-top: 15px;
+    width: 1%;
+    color: #535353;
+    display: table;
+    text-align: right;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.photo3 {
+    background: #535353;
+    border: 3px solid #535353;
+    box-shadow: 3px 3px 5px 1px gray;
+    -webkit-box-shadow: 3px 3px 5px 1px gray;
+    margin-bottom: 10px;
+}
+
+.photoAndText3 {
+    margin-top: 15px;
+    width: 1%;
+    color: #535353;
+    display: table;
+    text-align: right;
+    margin-left: auto;
+    margin-right: auto;
+}
