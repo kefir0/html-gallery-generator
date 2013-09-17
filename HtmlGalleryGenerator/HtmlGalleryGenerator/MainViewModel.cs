@@ -9,6 +9,15 @@ namespace HtmlGalleryGenerator
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        #region private static methods
+
+        private static void CopyFileToDir(string file, string dir)
+        {
+            File.Copy(file, Path.Combine(dir, file), true);
+        }
+
+        #endregion
+
         #region public properties and indexers
 
         public string FileListText
@@ -71,11 +80,6 @@ namespace HtmlGalleryGenerator
             get { return _goCommand ?? (_goCommand = new DelegateCommand(Go, CanGo)); }
         }
 
-        private bool CanGo()
-        {
-            return !string.IsNullOrEmpty(FileListText);
-        }
-
         public string OutputFileName
         {
             get { return _outputFileName; }
@@ -108,15 +112,21 @@ namespace HtmlGalleryGenerator
 
         #region private methods
 
+        private bool CanGo()
+        {
+            return !string.IsNullOrEmpty(FileListText);
+        }
+
         private void Go()
         {
-            var dlg = new FolderBrowserDialog{Description = "Выбери целевую папку (куда HTML файлы галереи записать)"};
+            var dlg = new FolderBrowserDialog {Description = "Выбери целевую папку (куда HTML файлы галереи записать)"};
             if (dlg.ShowDialog() == DialogResult.OK && Directory.Exists(dlg.SelectedPath))
             {
                 try
                 {
                     GalleryProcessor.CreateGallery(
-                        FileListText.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries), GalleryTitle,
+                        FileListText.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries),
+                        GalleryTitle,
                         ServerImagePath, OutputFileName, PageSize, dlg.SelectedPath);
 
                     // Copy CSS and logo
@@ -130,14 +140,9 @@ namespace HtmlGalleryGenerator
             }
         }
 
-        private void CopyFileToDir(string file, string dir)
-        {
-            File.Copy(file, Path.Combine(dir, file));
-        }
-
         private void LoadFilesFromFolder()
         {
-            var dlg = new FolderBrowserDialog{Description = "Папка с картинками:"};
+            var dlg = new FolderBrowserDialog {Description = "Папка с картинками:"};
             if (dlg.ShowDialog() == DialogResult.OK && Directory.Exists(dlg.SelectedPath))
             {
                 FileListText = string.Join(Environment.NewLine,
