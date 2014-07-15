@@ -2,9 +2,10 @@
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:msxsl="urn:schemas-microsoft-com:xslt" exclude-result-prefixes="msxsl">
-  <xsl:output method="xml" indent="yes" />
+  <xsl:output method="html" indent="yes" omit-xml-declaration="yes" />
 
   <xsl:template match="/">
+    <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html></xsl:text>
     <html>
       <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -13,6 +14,49 @@
           <xsl:value-of select="//Title" />
         </title>
         <link href="trialru.css" rel="stylesheet" media="all" />
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js">
+          <xsl:comment></xsl:comment>
+        </script>
+        <script>
+          $(document).ready(function () {
+          AdjustAllPictures();
+          $("img.photo3").click(function () {
+          var maxHeightCss = $(this).css("max-height");
+          if (maxHeightCss != "none")
+          {
+          ClearSize(this);
+          }
+          else
+          {
+          AdjustSize(this);
+          }
+          });
+          });
+
+          $(window).resize(function () {
+          AdjustAllPictures();
+          });
+
+          function AdjustAllPictures()
+          {
+          $("img.photo3").each(function (index, element) {
+          AdjustSize(element);
+          });
+          }
+
+          function AdjustSize(element)
+          {
+          $(element).css("max-height", $(window).height() - 20);
+          $(element).css("max-width", $(window).width() - 20);
+          }
+
+          function ClearSize(element)
+          {
+          $(element).css("max-height", "");
+          $(element).css("max-width", "");
+          }
+
+        </script>
       </head>
       <body>
         <div class="mainContent">
