@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-16" ?>
+<!DOCTYPE html> 
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Vyborg Outdoor Camp 2013</title>
+    <link href="trialru.css" rel="stylesheet" media="all" />
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            AdjustAllPictures();
+            $("img.photo3").click(function () {
+                var maxHeightCss = $(this).css("max-height");
+                if (maxHeightCss != "none")
+                {
+                    ClearSize(this);
+                }
+                else
+                {
+                    AdjustSize(this);
+                }
+            });
+        });
+
+        $(window).resize(function () {
+            AdjustAllPictures();
+        });
+
+        function AdjustAllPictures()
+        {
+            $("img.photo3").each(function (index, element) {
+                AdjustSize(element);
+            });
+        }
+
+        function AdjustSize(element)
+        {
+            $(element).css("max-height", $(window).height() - 20);
+            $(element).css("max-width", $(window).width() - 20);
+        }
+
+        function ClearSize(element)
+        {
+            $(element).css("max-height", "");
+            $(element).css("max-width", "");
+        }
+
+    </script>
+</head>
+<body>
+    <div class="mainContent">
+        <div class="logo">
+            <img src="logo.png" />
+        </div>
+        <p>
+            <span class="pages">Страницы: </span>
+            <span class="pageNum" style="font-weight:bold">1</span>
+        </p>
+        <div class="photoAndText3">
+            <img src="Resources/DSC_4373.jpg" class="photo3" />
+            <span class="text">1</span>
+        </div>
+        <p>
+            <span class="pages">Страницы: </span>
+            <span class="pageNum" style="font-weight:bold">1</span>
+        </p>
+    </div>
+</body>
+</html>
