@@ -129,8 +129,9 @@ namespace HtmlGalleryGenerator
                         GalleryTitle,
                         ServerImagePath, OutputFileName, PageSize, dlg.SelectedPath);
 
-                    // Copy CSS and logo
+                    // Copy CSS, JS, and logo
                     CopyFileToDir("trialru.css", dlg.SelectedPath);
+                    CopyFileToDir("trialru.js", dlg.SelectedPath);
                     CopyFileToDir("logo.png", dlg.SelectedPath);
                 }
                 catch (Exception ex)
@@ -142,11 +143,10 @@ namespace HtmlGalleryGenerator
 
         private void LoadFilesFromFolder()
         {
-            var dlg = new FolderBrowserDialog {Description = "Папка с картинками:"};
-            if (dlg.ShowDialog() == DialogResult.OK && Directory.Exists(dlg.SelectedPath))
+            var dlg = new OpenFileDialog {Title = "Выбери фотки", Multiselect = true};
+            if (dlg.ShowDialog() == DialogResult.OK && dlg.SafeFileNames.Any())
             {
-                FileListText = string.Join(Environment.NewLine,
-                    Directory.GetFiles(dlg.SelectedPath).Select(Path.GetFileName).ToArray());
+                FileListText = string.Join(Environment.NewLine, dlg.SafeFileNames.ToArray());
             }
         }
 
