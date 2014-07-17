@@ -2,9 +2,13 @@
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:msxsl="urn:schemas-microsoft-com:xslt" exclude-result-prefixes="msxsl">
-  <xsl:output method="html" indent="yes" omit-xml-declaration="yes" encoding="utf-8" />
+    <xsl:template match="*/text()[normalize-space()]">
+        <xsl:value-of select="normalize-space()"/>
+    </xsl:template>
 
-  <xsl:template match="/">
+    <xsl:template match="*/text()[not(normalize-space())]" />
+
+    <xsl:template match="/">
     <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html></xsl:text>
     <html>
       <head>
@@ -100,4 +104,5 @@ style="width:88px; height:31px; border:0; display:table; margin:auto" alt="Ян�
       </body>
     </html>
   </xsl:template>
+
 </xsl:stylesheet>
