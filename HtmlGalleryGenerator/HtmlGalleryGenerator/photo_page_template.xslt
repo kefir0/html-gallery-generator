@@ -2,7 +2,7 @@
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:msxsl="urn:schemas-microsoft-com:xslt" exclude-result-prefixes="msxsl">
-  <xsl:output method="html" indent="yes" omit-xml-declaration="yes" />
+  <xsl:output method="html" indent="yes" omit-xml-declaration="yes" encoding="utf-8" />
 
   <xsl:template match="/">
     <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html></xsl:text>
@@ -14,49 +14,8 @@
           <xsl:value-of select="//Title" />
         </title>
         <link href="trialru.css" rel="stylesheet" media="all" />
-        <script src="http://code.jquery.com/jquery-1.9.1.min.js">
-          <xsl:comment></xsl:comment>
-        </script>
-        <script>
-          $(document).ready(function () {
-          AdjustAllPictures();
-          $("img.photo3").click(function () {
-          var maxHeightCss = $(this).css("max-height");
-          if (maxHeightCss != "none")
-          {
-          ClearSize(this);
-          }
-          else
-          {
-          AdjustSize(this);
-          }
-          });
-          });
-
-          $(window).resize(function () {
-          AdjustAllPictures();
-          });
-
-          function AdjustAllPictures()
-          {
-          $("img.photo3").each(function (index, element) {
-          AdjustSize(element);
-          });
-          }
-
-          function AdjustSize(element)
-          {
-          $(element).css("max-height", $(window).height() - 20);
-          $(element).css("max-width", $(window).width() - 20);
-          }
-
-          function ClearSize(element)
-          {
-          $(element).css("max-height", "");
-          $(element).css("max-width", "");
-          }
-
-        </script>
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js">&#160;</script>
+        <script src="trialru.js" charset="utf-8">&#160;</script>
       </head>
       <body>
         <div class="mainContent">
@@ -84,7 +43,7 @@
 
           <xsl:for-each select="//Photo">
             <div class="photoAndText3">
-              <img src="{src}" class="photo3" />
+              <img src="{src}" class="photo3" title="Нажми для изменения размера" />
               <span class="text">
                 <xsl:value-of select="id" />
               </span>
