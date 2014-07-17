@@ -57,7 +57,8 @@ namespace HtmlGalleryGenerator
             using (var templateStream = File.OpenRead(templatePath))
             using (var xsltReader = XmlReader.Create(templateStream))
             using (var resultWriter = new StringWriter(resultSb))
-            using (var xmlWriter = XmlWriter.Create(resultWriter))
+            using (var xmlWriter = XmlWriter.Create(resultWriter, 
+                new XmlWriterSettings{OmitXmlDeclaration = true, Indent = true}))
             {
                 var t = new XslCompiledTransform();
                 t.Load(xsltReader);
