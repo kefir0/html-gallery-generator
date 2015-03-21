@@ -1,0 +1,1 @@
+Generates HTML gallery with XSLT template
